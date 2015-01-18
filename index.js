@@ -55,8 +55,7 @@ function chkType (val) {
 	if(_.isPlainObject(val)){
 		var ret= {};
 		for(key in val){
-			var obj= {};
-				obj[key]= chkType(val[key]);
+			ret[key]= chkType(val[key]);
 		}
 		return ret;
 	}
