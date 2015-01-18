@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/wwwy3y3/schemar/issues"
   },
-  "homepage": "https://github.com/wwwy3y3/schemar"
+  "homepage": "https://github.com/wwwy3y3/schemar",
+  "dependencies": {
+    "lodash": "^2.4.1"
+  }
 }
