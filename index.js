@@ -43,9 +43,7 @@ function chkType (val) {
 		// recursive
 		var ret= [];
 		val.forEach(function (element, index) {
-			var obj= {};
-				obj[index]= chkType(element);
-			ret.push(obj);
+			ret.push(chkType(element));
 		})
 		return ret;
 	}
