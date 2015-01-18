@@ -1,5 +1,5 @@
 # schemar
-
+schemar generate a schema from a js object
 
 ## install
 ``` javascript
