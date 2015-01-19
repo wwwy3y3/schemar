@@ -1,4 +1,19 @@
 var _= require('lodash');
+var moment = require('moment');
+var dateWrapper= function (text) {
+	text= (text)?text.trim():'text';
+	return 'date('+text+')';
+}
+
+var chkMoment= function (defaultType, val) {
+	// check if a date string
+	var m= moment(val);
+	if(m.isValid())
+		return dateWrapper(m._f || 'string');
+	else
+		return defaultType;
+}
+
 /*
 parse
 parse obj to schema
@@ -25,19 +40,6 @@ function chkType (val) {
 	if(_.isUndefined(val))
 		return 'undefined';
 
-	// if string
-	if(_.isString(val))
-		return 'string';
-
-	if(_.isNumber(val))
-		return 'number';
-
-	if(_.isBoolean(val))
-		return 'boolean';
-
-	if(_.isDate(val))
-		return 'date';
-
 	// if array
 	if(_.isArray(val)){
 		// recursive
@@ -56,6 +58,19 @@ function chkType (val) {
 		}
 		return ret;
 	}
+
+	// if string
+	if(_.isString(val))
+		return chkMoment('string', val);
+		
+	if(_.isBoolean(val))
+		return 'boolean';
+
+	if(_.isDate(val))
+		return dateWrapper('object');
+
+	if(_.isNumber(val))
+		return 'number';
 
 	// if it's a function
 	if(_.isFunction(val))
