@@ -42,9 +42,8 @@ function chkType (val) {
 	if(_.isArray(val)){
 		// recursive
 		var ret= [];
-		val.forEach(function (element, index) {
-			ret.push(chkType(element));
-		})
+		// pick the first one
+		ret.push(chkType(val[0]))
 		return ret;
 	}
 
