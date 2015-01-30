@@ -26,3 +26,11 @@ return
 }
 */
 ```
+
+## types
+*	string
+*	number
+*	boolean
+*	date
+*	date(format)
+*	object
