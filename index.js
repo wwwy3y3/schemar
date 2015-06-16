@@ -5,13 +5,17 @@ var dateWrapper= function (text) {
 	return 'date('+text+')';
 }
 
-var chkMoment= function (defaultType, val) {
+var chkMoment= function (val, opts) {
 	// check if a date string
 	var m= moment(val);
-	if(m.isValid())
+	if(m.isValid()){
 		return dateWrapper(m._f || 'string');
-	else
-		return defaultType;
+	}else if(opts && opts.textThres){
+		if(val.length>= opts.textThres)
+			return 'text';
+		else
+			return 'string';
+	}
 }
 
 /*
@@ -26,12 +30,12 @@ ex: { "name": "Alan", "hometown": "Somewhere, TX",
 		"kids": [{ "name": "string", "age": "number" }]
     }
 */
-exports.parse= function (obj) {
+exports.parse= function (obj, opts) {
 	//obj -> schema
-	return chkType(obj);
+	return chkType(obj, opts);
 }
 
-function chkType (val) {
+function chkType (val, opts) {
 	// if null
 	if(_.isNull(val))
 		return 'null';
@@ -45,7 +49,7 @@ function chkType (val) {
 		// recursive
 		var ret= [];
 		// pick the first one
-		ret.push(chkType(val[0]))
+		ret.push(chkType(val[0]), opts)
 		return ret;
 	}
 
@@ -54,14 +58,14 @@ function chkType (val) {
 	if(_.isPlainObject(val)){
 		var ret= {};
 		for(key in val){
-			ret[key]= chkType(val[key]);
+			ret[key]= chkType(val[key], opts);
 		}
 		return ret;
 	}
 
 	// if string
 	if(_.isString(val))
-		return chkMoment('string', val);
+		return chkMoment(val, opts);
 		
 	if(_.isBoolean(val))
 		return 'boolean';
