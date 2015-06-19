@@ -49,7 +49,7 @@ function chkType (val, opts) {
 		// recursive
 		var ret= [];
 		// pick the first one
-		ret.push(chkType(val[0]), opts)
+		ret.push(chkType(val[0], opts))
 		return ret;
 	}
 
