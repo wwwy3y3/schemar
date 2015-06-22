@@ -93,12 +93,12 @@ function chkType (val, opts) {
 // https://github.com/jdorn/json-editor
 // http://json-schema.org/latest/json-schema-core.html
 exports.jsonSchema= function (obj, layout, title) {
-	return schemaParse(obj, layout, title)
+	return schemaParse(obj, layout, { keyname: title })
 }
 
 
-function stringFormat (str, opts) {
-	var obj= { type: 'string', default: str };
+function stringFormat (str, layout, opts) {
+	var obj= { type: 'string' };
 	var types= {
 		color: validator.isHexColor,
 		date: validator.isDate,
@@ -106,9 +106,12 @@ function stringFormat (str, opts) {
 		integer: validator.isInt,
 		float: validator.isFloat,
 		textarea: function (str) {
-			return (opts && opts.textThres && str.length>= opts.textThres)
+			return (layout && layout.textThres && str.length>= layout.textThres)
 		}
 	}
+
+	if(!opts.inArr)
+		obj.default= str;
 
 	for(key in types){
 		var validate= types[key];
@@ -122,20 +125,20 @@ function stringFormat (str, opts) {
 	return obj;
 }
 
-function schemaParse (val, layout, keyname) {
+function schemaParse (val, layout, opts) {
 	// a object
 	if(_.isPlainObject(val)){
 		var obj= { type: 'object', properties: {} };
 
-		if(keyname)
-			obj.title= keyname;
+		if(opts.keyname)
+			obj.title= opts.keyname;
 
 		// recursively assign all schemas in object
 		for(key in val){
 			// pass key to sub object
 			// in case, sub object is a obj/array need a title
 			// but if it's a string, nevermind then.
-			obj.properties[key]= schemaParse(val[key], layout, key);
+			obj.properties[key]= schemaParse(val[key], layout, {keyname: key, inArr: false});
 		}
 		return obj;
 	}
@@ -146,8 +149,8 @@ function schemaParse (val, layout, keyname) {
 		obj.format= layout.arrayUI || 'table';
 		obj.uniqueItems= layout.arrayUniqIt || true;
 
-		if(keyname)
-			obj.title= keyname;
+		if(opts.keyname)
+			obj.title= opts.keyname;
 
 		// empty
 		// wtf?
@@ -157,12 +160,12 @@ function schemaParse (val, layout, keyname) {
 		// iterate the attributes in first element
 		var firstEle= val[0];
 		for(key in firstEle){
-			obj.items.properties[key]= schemaParse(firstEle[key], layout, key);
+			obj.items.properties[key]= schemaParse(firstEle[key], layout, {keyname: key, inArr: true});
 		}
 		return obj;
 	}
 
 	// default return
 	// i dont know
-	return stringFormat(val, layout);
+	return stringFormat(val, layout, opts);
 }
