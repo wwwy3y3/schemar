@@ -1,5 +1,6 @@
 var _= require('lodash');
 var moment = require('moment');
+var validator = require('validator');
 var dateWrapper= function (text) {
 	text= (text)?text.trim():'text';
 	return 'date('+text+')';
@@ -86,4 +87,82 @@ function chkType (val, opts) {
 
 	//default return 
 	return 'object';
+}
+
+
+// https://github.com/jdorn/json-editor
+// http://json-schema.org/latest/json-schema-core.html
+exports.jsonSchema= function (obj, layout, title) {
+	return schemaParse(obj, layout, title)
+}
+
+
+function stringFormat (str, opts) {
+	var obj= { type: 'string' };
+	var types= {
+		color: validator.isHexColor,
+		date: validator.isDate,
+		email: validator.isEmail,
+		integer: validator.isInt,
+		float: validator.isFloat,
+		textarea: function (str) {
+			return (opts && opts.textThres && str.length>= opts.textThres)
+		}
+	}
+
+	for(key in types){
+		var validate= types[key];
+		if(validate(str)){
+			obj.format= key;
+			return obj;
+		}
+	}
+
+	// default
+	return obj;
+}
+
+function schemaParse (val, layout, keyname) {
+	// a object
+	if(_.isPlainObject(val)){
+		var obj= { type: 'object', properties: {} };
+
+		if(keyname)
+			obj.title= keyname;
+
+		// recursively assign all schemas in object
+		for(key in val){
+			// pass key to sub object
+			// in case, sub object is a obj/array need a title
+			// but if it's a string, nevermind then.
+			obj.properties[key]= schemaParse(val[key], layout, key);
+		}
+		return obj;
+	}
+
+	// an array
+	if(_.isArray(val)){
+		var obj= { type: 'array', items: { type: "object", properties: {} } };
+		obj.format= layout.arrayUI || 'table';
+		obj.uniqueItems= layout.arrayUniqIt || true;
+
+		if(keyname)
+			obj.title= keyname;
+
+		// empty
+		// wtf?
+		if(val.length == 0)
+			return obj;
+
+		// iterate the attributes in first element
+		var firstEle= val[0];
+		for(key in firstEle){
+			obj.items.properties[key]= schemaParse(firstEle[key], layout, key);
+		}
+		return obj;
+	}
+
+	// default return
+	// i dont know
+	return stringFormat(val, layout);
 }
