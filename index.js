@@ -114,6 +114,7 @@ function stringFormat (str, opts) {
 		var validate= types[key];
 		if(validate(str)){
 			obj.format= key;
+			obj.default= str;
 			return obj;
 		}
 	}
