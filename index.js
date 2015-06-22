@@ -98,7 +98,7 @@ exports.jsonSchema= function (obj, layout, title) {
 
 
 function stringFormat (str, opts) {
-	var obj= { type: 'string' };
+	var obj= { type: 'string', default: str };
 	var types= {
 		color: validator.isHexColor,
 		date: validator.isDate,
@@ -114,7 +114,6 @@ function stringFormat (str, opts) {
 		var validate= types[key];
 		if(validate(str)){
 			obj.format= key;
-			obj.default= str;
 			return obj;
 		}
 	}
