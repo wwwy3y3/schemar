@@ -162,6 +162,9 @@ function schemaParse (val, layout, opts) {
 		for(key in firstEle){
 			obj.items.properties[key]= schemaParse(firstEle[key], layout, {keyname: key, inArr: true});
 		}
+
+		// defaults
+		obj.items.default= val;
 		return obj;
 	}
 
