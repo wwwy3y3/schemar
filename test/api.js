@@ -43,5 +43,5 @@ var obj2= schemar.jsonSchema(Datas.jeremy,
 			}
 		}
  	}, 'sparta!!');
-console.log(JSON.stringify(obj2, null, 4));
+console.log(JSON.stringify(schemar.jsonSchema(Datas.joe), null, 4));
 

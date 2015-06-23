@@ -168,7 +168,7 @@ function schemaParse (val, layout, opts) {
 		};
 
 		// append path to opts.path
-		if(opts.path)
+		if(opts.path && opts.keyname)
 			opts.path.unshift(opts.keyname);
 		else
 			opts.path= [];
@@ -192,14 +192,13 @@ function schemaParse (val, layout, opts) {
 	if(_.isArray(val)){
 		var obj= { 
 			type: 'array', 
-			items: { type: "object", properties: {} },
 			format: 'table',
 			uniqueItems: true,
 			title: opts.keyname
 		};
 
 		// append path to opts.path
-		if(opts.path)
+		if(opts.path && opts.keyname)
 			opts.path.unshift(opts.keyname);
 		else
 			opts.path= [];
@@ -213,9 +212,17 @@ function schemaParse (val, layout, opts) {
 
 		// iterate the attributes in first element
 		var firstEle= val[0];
-		for(key in firstEle){
-			obj.items.properties[key]= schemaParse(firstEle[key], layout, {keyname: key, inArr: true, path: opts.path});
-		}
+		obj.items= schemaParse(firstEle, layout, { inArr: true, path: opts.path});
+		/*
+		// if firstEle is a object
+		if(_.isPlainObject(firstEle))
+			for(key in firstEle){
+				obj.items.properties[key]= schemaParse(firstEle[key], layout, {keyname: key, inArr: true, path: opts.path});
+			}
+		else{
+			// not a object
+			// perhaps an array, or string
+		}*/
 
 		// insert data to defaults
 		obj.default= val;
