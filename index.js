@@ -94,10 +94,15 @@ function chkType (val, opts) {
 // https://github.com/jdorn/json-editor
 // http://json-schema.org/latest/json-schema-core.html
 exports.jsonSchema= function (obj, layout, title) {
+	layout= layout || {};
+	title= title || 'data';
 	return schemaParse(obj, layout, { keyname: title })
 }
 
 function attr (schema, paths, name) {
+	if(!schema) // empty schema
+		return {};
+
 	var current= schema;
 
 	// go into right props for the path
