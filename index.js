@@ -99,65 +99,6 @@ exports.jsonSchema= function (obj, layout, title) {
 	return schemaParse(obj, layout, { keyname: title })
 }
 
-function attr (schema, paths, name) {
-	if(!schema) // empty schema
-		return {};
-
-	var current= schema;
-
-	// go into right props for the path
-	paths.forEach(function (path) {
-		// if root
-		if(paths.length==1)
-			current= current[path].properties;
-		else
-			current= current.properties[path];
-	})
-
-	// no name, just the settings under this path
-	// only return settings
-	if(!name)
-		return _.pick(current, pickers);
-
-	// we got attrs
-	return _.omit(current[name], 'properties');
-}
-
-
-function stringFormat (str, layout, opts) {
-	var obj= { type: 'string' };
-	var types= {
-		color: validator.isHexColor,
-		date: validator.isDate,
-		email: validator.isEmail,
-		integer: validator.isInt,
-		float: validator.isFloat,
-		textarea: function (str) {
-			return (layout && layout.textThres && str.length>= layout.textThres)
-		}
-	}
-
-	// if in a array, no need to add default
-	// data will be inserted outside
-	if(!opts.inArr)
-		obj.default= str;
-
-	// add layout
-	obj= _.merge(obj, attr(layout.schema, opts.path, opts.keyname));
-
-	// determine the format
-	for(key in types){
-		var validate= types[key];
-		if(validate(str)){
-			obj.format= key;
-			return obj;
-		}
-	}
-
-	// default
-	return obj;
-}
-
 function schemaParse (val, layout, opts) {
 	// a object
 	if(_.isPlainObject(val)){
@@ -213,16 +154,6 @@ function schemaParse (val, layout, opts) {
 		// iterate the attributes in first element
 		var firstEle= val[0];
 		obj.items= schemaParse(firstEle, layout, { inArr: true, path: opts.path});
-		/*
-		// if firstEle is a object
-		if(_.isPlainObject(firstEle))
-			for(key in firstEle){
-				obj.items.properties[key]= schemaParse(firstEle[key], layout, {keyname: key, inArr: true, path: opts.path});
-			}
-		else{
-			// not a object
-			// perhaps an array, or string
-		}*/
 
 		// insert data to defaults
 		obj.default= val;
@@ -237,3 +168,64 @@ function schemaParse (val, layout, opts) {
 	// i dont know
 	return stringFormat(val, layout, opts);
 }
+
+
+function stringFormat (str, layout, opts) {
+	var obj= { type: 'string' };
+	var types= {
+		color: validator.isHexColor,
+		date: validator.isDate,
+		email: validator.isEmail,
+		integer: validator.isInt,
+		float: validator.isFloat,
+		textarea: function (str) {
+			return (layout && layout.textThres && str.length>= layout.textThres)
+		}
+	}
+
+	// if in a array, no need to add default
+	// data will be inserted outside
+	if(!opts.inArr)
+		obj.default= str;
+
+	// add layout
+	obj= _.merge(obj, attr(layout.schema, opts.path, opts.keyname));
+
+	// determine the format
+	for(key in types){
+		var validate= types[key];
+		if(validate(str)){
+			obj.format= key;
+			return obj;
+		}
+	}
+
+	// default
+	return obj;
+}
+
+
+function attr (schema, paths, name) {
+	if(!schema) // empty schema
+		return {};
+
+	var current= schema;
+
+	// go into right props for the path
+	paths.forEach(function (path) {
+		// if root
+		if(paths.length==1)
+			current= current[path].properties;
+		else
+			current= current.properties[path];
+	})
+
+	// no name, just the settings under this path
+	// only return settings
+	if(!name)
+		return _.pick(current, pickers);
+
+	// we got attrs
+	return _.omit(current[name], 'properties');
+}
+
