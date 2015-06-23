@@ -164,7 +164,7 @@ function schemaParse (val, layout, opts) {
 		}
 
 		// defaults
-		obj.items.default= val;
+		obj.default= val;
 		return obj;
 	}
 
