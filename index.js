@@ -1,6 +1,7 @@
 var _= require('lodash');
 var moment = require('moment');
 var validator = require('validator');
+var pickers= ['title', 'format', 'uniqueItems', 'options', 'headerTemplate', 'definitions', 'defaultProperties'];
 var dateWrapper= function (text) {
 	text= (text)?text.trim():'text';
 	return 'date('+text+')';
@@ -96,6 +97,27 @@ exports.jsonSchema= function (obj, layout, title) {
 	return schemaParse(obj, layout, { keyname: title })
 }
 
+function attr (schema, paths, name) {
+	var current= schema;
+
+	// go into right props for the path
+	paths.forEach(function (path) {
+		// if root
+		if(paths.length==1)
+			current= current[path].properties;
+		else
+			current= current.properties[path];
+	})
+
+	// no name, just the settings under this path
+	// only return settings
+	if(!name)
+		return _.pick(current, pickers);
+
+	// we got attrs
+	return _.omit(current[name], 'properties');
+}
+
 
 function stringFormat (str, layout, opts) {
 	var obj= { type: 'string' };
@@ -110,10 +132,15 @@ function stringFormat (str, layout, opts) {
 		}
 	}
 
+	// if in a array, no need to add default
+	// data will be inserted outside
 	if(!opts.inArr)
 		obj.default= str;
 
-	//console.log(opts.path.join('.')+'.'+opts.keyname);
+	// add layout
+	obj= _.merge(obj, attr(layout.schema, opts.path, opts.keyname));
+
+	// determine the format
 	for(key in types){
 		var validate= types[key];
 		if(validate(str)){
@@ -129,16 +156,19 @@ function stringFormat (str, layout, opts) {
 function schemaParse (val, layout, opts) {
 	// a object
 	if(_.isPlainObject(val)){
-		var obj= { type: 'object', properties: {} };
-
-		if(opts.keyname)
-			obj.title= opts.keyname;
+		var obj= { 
+			type: 'object', 
+			title: opts.keyname, 
+			properties: {} 
+		};
 
 		// append path to opts.path
 		if(opts.path)
 			opts.path.unshift(opts.keyname);
 		else
 			opts.path= [];
+
+		obj= _.merge(obj, attr(layout.schema, opts.path));
 
 		// recursively assign all schemas in object
 		for(key in val){
@@ -155,18 +185,21 @@ function schemaParse (val, layout, opts) {
 
 	// an array
 	if(_.isArray(val)){
-		var obj= { type: 'array', items: { type: "object", properties: {} } };
-		obj.format= layout.arrayUI || 'table';
-		obj.uniqueItems= layout.arrayUniqIt || true;
-
-		if(opts.keyname)
-			obj.title= opts.keyname;
+		var obj= { 
+			type: 'array', 
+			items: { type: "object", properties: {} },
+			format: 'table',
+			uniqueItems: true,
+			title: opts.keyname
+		};
 
 		// append path to opts.path
 		if(opts.path)
 			opts.path.unshift(opts.keyname);
 		else
 			opts.path= [];
+
+		obj= _.merge(obj, attr(layout.schema, opts.path));
 
 		// empty
 		// wtf?
@@ -179,7 +212,7 @@ function schemaParse (val, layout, opts) {
 			obj.items.properties[key]= schemaParse(firstEle[key], layout, {keyname: key, inArr: true, path: opts.path});
 		}
 
-		// defaults
+		// insert data to defaults
 		obj.default= val;
 
 		// shift the property used
