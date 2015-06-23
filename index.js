@@ -113,6 +113,7 @@ function stringFormat (str, layout, opts) {
 	if(!opts.inArr)
 		obj.default= str;
 
+	//console.log(opts.path.join('.')+'.'+opts.keyname);
 	for(key in types){
 		var validate= types[key];
 		if(validate(str)){
@@ -133,13 +134,22 @@ function schemaParse (val, layout, opts) {
 		if(opts.keyname)
 			obj.title= opts.keyname;
 
+		// append path to opts.path
+		if(opts.path)
+			opts.path.unshift(opts.keyname);
+		else
+			opts.path= [];
+
 		// recursively assign all schemas in object
 		for(key in val){
 			// pass key to sub object
 			// in case, sub object is a obj/array need a title
 			// but if it's a string, nevermind then.
-			obj.properties[key]= schemaParse(val[key], layout, {keyname: key, inArr: false});
+			obj.properties[key]= schemaParse(val[key], layout, {keyname: key, inArr: false, path: opts.path});
 		}
+
+		// shift the property used
+		opts.path.shift();
 		return obj;
 	}
 
@@ -152,6 +162,12 @@ function schemaParse (val, layout, opts) {
 		if(opts.keyname)
 			obj.title= opts.keyname;
 
+		// append path to opts.path
+		if(opts.path)
+			opts.path.unshift(opts.keyname);
+		else
+			opts.path= [];
+
 		// empty
 		// wtf?
 		if(val.length == 0)
@@ -160,11 +176,15 @@ function schemaParse (val, layout, opts) {
 		// iterate the attributes in first element
 		var firstEle= val[0];
 		for(key in firstEle){
-			obj.items.properties[key]= schemaParse(firstEle[key], layout, {keyname: key, inArr: true});
+			obj.items.properties[key]= schemaParse(firstEle[key], layout, {keyname: key, inArr: true, path: opts.path});
 		}
 
 		// defaults
 		obj.default= val;
+
+		// shift the property used
+		opts.path.shift();
+
 		return obj;
 	}
 
