@@ -1,5 +1,6 @@
 exports.jeremy= { 
 	textThres: 20,
+	title: 'sparta!!',
 	schema: {
 		favorite_color: {
 			title: 'favorite color'

@@ -93,11 +93,10 @@ function chkType (val, opts) {
 
 // https://github.com/jdorn/json-editor
 // http://json-schema.org/latest/json-schema-core.html
-exports.jsonSchema= function (obj, layout, opts) {
+exports.jsonSchema= function (obj, layout) {
 	layout= layout || {};
-	opts= opts || {};
-	opts.title= opts.title || 'data';
-	return schemaParse(obj, layout, opts)
+	var title= layout.title || 'data';
+	return schemaParse(obj, layout, { title: title });
 }
 
 function schemaParse (val, layout, opts) {
