@@ -93,10 +93,11 @@ function chkType (val, opts) {
 
 // https://github.com/jdorn/json-editor
 // http://json-schema.org/latest/json-schema-core.html
-exports.jsonSchema= function (obj, layout, title) {
+exports.jsonSchema= function (obj, layout, opts) {
 	layout= layout || {};
-	title= title || 'data';
-	return schemaParse(obj, layout, { keyname: title })
+	opts= opts || {};
+	opts.title= opts.title || 'data';
+	return schemaParse(obj, layout, opts)
 }
 
 function schemaParse (val, layout, opts) {
@@ -104,13 +105,13 @@ function schemaParse (val, layout, opts) {
 	if(_.isPlainObject(val)){
 		var obj= { 
 			type: 'object', 
-			title: opts.keyname, 
+			title: opts.title, 
 			properties: {} 
 		};
 
 		// append path to opts.path
-		if(opts.path && opts.keyname)
-			opts.path.unshift(opts.keyname);
+		if(opts.path && opts.title)
+			opts.path.unshift(opts.title);
 		else
 			opts.path= [];
 
@@ -121,7 +122,7 @@ function schemaParse (val, layout, opts) {
 			// pass key to sub object
 			// in case, sub object is a obj/array need a title
 			// but if it's a string, nevermind then.
-			obj.properties[key]= schemaParse(val[key], layout, {keyname: key, inArr: false, path: opts.path});
+			obj.properties[key]= schemaParse(val[key], layout, {title: key, inArr: false, path: opts.path});
 		}
 
 		// shift the property used
@@ -135,12 +136,12 @@ function schemaParse (val, layout, opts) {
 			type: 'array', 
 			format: 'table',
 			uniqueItems: true,
-			title: opts.keyname
+			title: opts.title
 		};
 
 		// append path to opts.path
-		if(opts.path && opts.keyname)
-			opts.path.unshift(opts.keyname);
+		if(opts.path && opts.title)
+			opts.path.unshift(opts.title);
 		else
 			opts.path= [];
 
@@ -179,7 +180,7 @@ function stringFormat (str, layout, opts) {
 		integer: validator.isInt,
 		float: validator.isFloat,
 		textarea: function (str) {
-			return (layout && layout.textThres && str.length>= layout.textThres)
+			return (opts && opts.textThres && str.length>= opts.textThres)
 		}
 	}
 
@@ -189,7 +190,7 @@ function stringFormat (str, layout, opts) {
 		obj.default= str;
 
 	// add layout
-	obj= _.merge(obj, attr(layout.schema, opts.path, opts.keyname));
+	obj= _.merge(obj, attr(layout.schema, opts.path, opts.title));
 
 	// determine the format
 	for(key in types){

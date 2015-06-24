@@ -5,7 +5,7 @@ var jsome= require('jsome');
 
 jsome(schemar.parse(Datas.varies, { textThres: 20 }));
 jsome(schemar.parse(Datas.nested, { textThres: 20 }));
-jsome(schemar.jsonSchema(Datas.jeremy, Layouts.jeremy, 'sparta!!'));
+jsome(schemar.jsonSchema(Datas.jeremy, Layouts.jeremy, { title: 'sparta!!', textThres: 20 }));
 jsome(schemar.jsonSchema(Datas.joe));
 jsome(schemar.jsonSchema(Datas.resume));
 jsome(schemar.jsonSchema(Datas.strata));
