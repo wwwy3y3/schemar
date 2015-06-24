@@ -182,7 +182,7 @@ function stringFormat (str, layout, opts) {
 		integer: validator.isInt,
 		float: validator.isFloat,
 		textarea: function (str) {
-			return (opts && opts.textThres && str.length>= opts.textThres)
+			return (layout && layout.textThres && str.length>= layout.textThres)
 		}
 	}
 
