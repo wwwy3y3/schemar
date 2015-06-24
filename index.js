@@ -105,9 +105,11 @@ function schemaParse (val, layout, opts) {
 	if(_.isPlainObject(val)){
 		var obj= { 
 			type: 'object', 
-			title: opts.title, 
 			properties: {} 
 		};
+
+		if(opts.title)
+			obj.title= opts.title;
 
 		// append path to opts.path
 		if(opts.path && opts.title)
