@@ -135,7 +135,7 @@ function schemaParse (val, layout, opts) {
 	if(_.isArray(val)){
 		var obj= { 
 			type: 'array', 
-			format: 'table',
+			format: 'tabs',
 			uniqueItems: true,
 			title: opts.title
 		};
