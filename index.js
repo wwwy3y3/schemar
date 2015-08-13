@@ -91,6 +91,72 @@ function chkType (val, opts) {
 }
 
 
+// parseObj
+exports.parseObj= function (obj, opts) {
+	return chkTypeFormat(obj, opts);
+}
+
+function chkTypeFormat (val, opts) {
+	var retObj= {};
+	// if null
+	if(_.isNull(val)){
+		retObj.type= 'null';
+	}else if(_.isUndefined(val)){
+		// if undefined
+		retObj.type= 'undefined';
+	}else if(_.isArray(val)){
+		// recursive
+		var ret= [];
+		// pick the first one
+		retObj.type= chkTypeFormat(val[0], opts);
+		ret.push(retObj)
+		return ret;
+	}else if(_.isPlainObject(val)){
+		// if object
+		// go nested
+		var ret= {};
+		for(key in val){
+			ret[key]= chkTypeFormat(val[key], opts);
+		}
+		return ret;
+	}else if(_.isString(val)){
+		retObj.type= 'string'; 
+		var format= formater(val, opts);
+		if(format)
+			retObj.format= format;
+	}else if(_.isBoolean(val)){
+		retObj.type= 'boolean';
+	}else if(_.isDate(val)){
+		retObj.type= 'date';
+	}else if(_.isNumber(val)){
+		retObj.type= 'number';
+	}else{
+		retObj.type= 'object';
+	}
+		
+	
+	return retObj;
+}
+
+function formater (val, opts) {
+	var types= {
+		color: validator.isHexColor,
+		date: validator.isDate,
+		email: validator.isEmail,
+		textarea: function (str) {
+			return (opts && opts.textThres && str.length>= opts.textThres)
+		}
+	}
+
+	// determine the format
+	for(key in types){
+		var validate= types[key];
+		if(validate(val))
+			return key
+	}
+	return null
+}
+
 // https://github.com/jdorn/json-editor
 // http://json-schema.org/latest/json-schema-core.html
 exports.jsonSchema= function (obj, layout) {
