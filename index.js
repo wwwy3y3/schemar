@@ -108,7 +108,7 @@ function chkTypeFormat (val, opts) {
 		// recursive
 		var ret= [];
 		// pick the first one
-		retObj.type= chkTypeFormat(val[0], opts);
+		retObj= chkTypeFormat(val[0], opts);
 		ret.push(retObj)
 		return ret;
 	}else if(_.isPlainObject(val)){
