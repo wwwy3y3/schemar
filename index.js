@@ -106,17 +106,15 @@ function chkTypeFormat (val, opts) {
 		retObj.type= 'undefined';
 	}else if(_.isArray(val)){
 		// recursive
-		var ret= [];
-		// pick the first one
-		retObj= chkTypeFormat(val[0], opts);
-		ret.push(retObj)
+		var ret= { type: 'array' };
+		ret.items= chkTypeFormat(val[0], opts);
 		return ret;
 	}else if(_.isPlainObject(val)){
 		// if object
 		// go nested
-		var ret= {};
+		var ret= { type: 'object', items: {} };
 		for(key in val){
-			ret[key]= chkTypeFormat(val[key], opts);
+			ret.items[key]= chkTypeFormat(val[key], opts);
 		}
 		return ret;
 	}else if(_.isString(val)){
