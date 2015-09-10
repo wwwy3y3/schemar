@@ -295,3 +295,60 @@ function attr (schema, paths, name) {
 	return _.omit(current[name], 'properties');
 }
 
+
+
+var mergeInto= exports.mergeInto= function(schema, cols) {
+    for(key in cols){
+    	// settings are user defined properties
+        var settings= cols[key];
+        // item is the schema matched with the key we iterate now
+        var item= schema.items[key];
+
+        // if key in columns not defined in schema
+        if(!item) continue;
+
+        // only description
+        if(_.isString(settings)){
+            settings= {'description': settings};
+        }
+
+        
+        if(item.type=='array'){
+            if(item.items.type=='array' || item.items.type=='object'){
+                for(key in settings)
+                    if(key=='description')
+                        item[key]= settings[key];
+                    else if(key=='format')
+                        item[key]= '$'+settings[key];
+                mergeInto(item.items, settings);
+            }else{
+                for(key in settings)
+                    item[key]= settings[key];
+            }
+        }else if(item.type=='object'){
+        	mergeInto(item, settings);
+        }else{
+            // an object with description, format
+            for(key in settings){
+                var setting= settings[key];
+
+                // if setting is key/value
+                // it's either a format, description object
+                // or a nested array/object description
+                if(_.isString(setting)){
+                    if(key=='description')
+                        item[key]= setting;
+                    else if(key=='format')
+                        item[key]= '$'+setting;
+                }
+
+                    
+                if (_.isPlainObject(setting)){
+                    mergeInto(item.items[key], setting);
+                }
+                    
+            }
+        }
+            
+    }
+}
