@@ -1,0 +1,257 @@
+{
+    "layout": "./resume.hbs",
+    "data": {
+        "basics": {
+            "name": "王小明",
+            "label": "程式員",
+            "picture": "http://i.imgur.com/GaDgOqB.png",
+            "email": "john@gmail.com",
+            "phone": "(912) 555-4321",
+            "website": "http://johndoe.com",
+            "summary": "A summary of John Doe...",
+            "location": {
+                "address": "2712 Broadway St",
+                "postalCode": "CA 94115",
+                "city": "San Francisco",
+                "countryCode": "US",
+                "region": "California"
+            },
+            "profiles": [{
+                "network": "Twitter",
+                "username": "john",
+                "url": "http://twitter.com/john"
+            }]
+        },
+        "work": [{
+            "company": "公司",
+            "position": "工程師",
+            "website": "http://company.com",
+            "startDate": "2013-01-01",
+            "endDate": "2014-01-01",
+            "summary": "Description...",
+            "highlights": [
+                "Started the company"
+            ]
+        }],
+        "volunteer": [{
+            "organization": "Organization",
+            "position": "Volunteer",
+            "website": "http://organization.com/",
+            "startDate": "2012-01-01",
+            "endDate": "2013-01-01",
+            "summary": "Description...",
+            "highlights": [
+                "Awarded 'Volunteer of the Month'"
+            ]
+        }],
+        "education": [{
+            "institution": "University",
+            "area": "Software Development",
+            "studyType": "Bachelor",
+            "startDate": "2011-01-01",
+            "endDate": "2013-01-01",
+            "gpa": "4.0",
+            "courses": [
+                "DB1101 - Basic SQL"
+            ]
+        }],
+        "awards": [{
+            "title": "Award",
+            "date": "2014-11-01",
+            "awarder": "Company",
+            "summary": "There is no spoon."
+        }],
+        "publications": [{
+            "name": "Publication",
+            "publisher": "Company",
+            "releaseDate": "2014-10-01",
+            "website": "http://publication.com",
+            "summary": "Description..."
+        }],
+        "skills": [{
+            "name": "Web Development",
+            "level": "Master",
+            "keywords": [
+                "HTML",
+                "CSS",
+                "Javascript"
+            ]
+        }],
+        "languages": [{
+            "language": "English",
+            "fluency": "Native speaker"
+        }],
+        "interests": [{
+            "name": "Wildlife",
+            "keywords": [
+                "Ferrets",
+                "Unicorns"
+            ]
+        }],
+        "references": [{
+            "name": "Jane Doe",
+            "reference": "Reference...",
+            "website": "http://test.io"
+        }]
+    },
+    "columns": {
+        "basics": {
+            "name": {
+                "format": "user.profile.name",
+                "description": "你的名字"
+            },
+            "label": "你的職稱",
+            "picture": {
+                "format": "user.profile.thumbnail",
+                "description": "你的大頭照"
+            },
+            "email": {
+                "format": "user.profile.email",
+                "description": "你的信箱"
+            },
+            "phone": {
+                "format": "user.profile.phone",
+                "description": "你的電話"
+            },
+            "website": {
+                "format": "link",
+                "description": "你的網站"
+            },
+            "summary": {
+                "format": "textarea",
+                "description": "說說你自己"
+            },
+            "location": {
+                "address": "你的地址",
+                "postalCode": "郵遞區號",
+                "city": {
+                    "format": "city",
+                    "description": "你居住的城市"
+                },
+                "countryCode": "你的國家代號",
+                "region": "你住在哪一洲"
+            },
+            "profiles": {
+                "network": "輸入一個社群網站名稱；如：twitter, facebook...",
+                "username": "你在這個社群網站的名稱為何",
+                "url": "這個社群網站的連結為何"
+            }
+        },
+        "work": {
+            "company": "你曾經在哪間公司工作",
+            "position": "你在此公司的職位為何",
+            "website": {
+                "format": "link",
+                "description": "該公司的網站連結為何"
+            },
+            "startDate": {
+                "format": "date",
+                "description": "你從什麼時候開始在這間公司工作"
+            },
+            "endDate": {
+                "format": "endDate",
+                "description": "你在什麼時候結束在該公司工作"
+            },
+            "summary": {
+                "format": "textarea",
+                "description": "說明你的工作內容"
+            },
+            "highlights": "你在該公司期間有什麼亮點？"
+        },
+        "volunteer": {
+            "organization": "你在哪裡當過志工",
+            "position": "職稱為何",
+            "website": {
+                "format": "link",
+                "description": "這個組織的網站連結為何"
+            },
+            "startDate": {
+                "format": "date",
+                "description": "你從什麼時候開始在此單位服務"
+            },
+            "endDate": {
+                "format": "endDate",
+                "description": "你在什麼時候結束在此單位服務"
+            },
+            "summary": {
+                "format": "textarea",
+                "description": "說明你的服務內容"
+            },
+            "highlights": "你在服務期間有什麼亮點？"
+        },
+        "education": {
+            "institution": "你唸過哪間學校",
+            "area": "專供領域為何",
+            "studyType": "所拿的學位為何",
+            "startDate": {
+                "format": "date",
+                "description": "你從什麼時候開始在此學校上課"
+            },
+            "endDate": {
+                "format": "endDate",
+                "description": "你在什麼時候結束在此學校上課"
+            },
+            "gpa": {
+                "format": "number",
+                "description": "你的GPA成績為何"
+            },
+            "courses": "你有修過哪些課"
+        },
+        "awards": {
+            "title": "你得過什麼獎",
+            "date": {
+                "format": "date",
+                "description": "什麼時候得獎的"
+            },
+            "awarder": "受獎人是誰",
+            "summary": {
+                "format": "textarea",
+                "description": "描述一下這個獎項"
+            }
+        },
+        "publications": {
+            "name": "你曾經出版過的書籍名稱",
+            "publisher": "作者是誰",
+            "releaseDate": {
+                "format": "date",
+                "description": "出版日是什麼時候"
+            },
+            "website": {
+                "format": "link",
+                "description": "這個出版書籍網站為何"
+            },
+            "summary": {
+                "format": "textarea",
+                "description": "介紹一下這本書籍"
+            }
+        },
+        "skills": {
+            "name": "你所會的技能名稱",
+            "level": {
+                "description": "專精的程度為何",
+                "format": "level"
+            },
+            "keywords": "該技能的關鍵字"
+        },
+        "languages": {
+            "language": "你所會的語言名稱",
+            "fluency": "流利程度為何"
+        },
+        "interests": {
+            "name": "你的嗜好",
+            "keywords": "該嗜好的關鍵字"
+        },
+        "references": {
+            "name": "參考資料的名稱",
+            "reference": {
+                "format": "link",
+                "description": "參考資料連結為何"
+            },
+            "website": {
+                "format": "link",
+                "description": "參考資料的網站"
+            }
+        }
+
+    }
+}

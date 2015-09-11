@@ -1,0 +1,74 @@
+{
+	"layout": "./index.hbs",
+	"data": {
+		"title": "@wwwy3y3",
+		"description": "fork from Joe's website",
+		"icon": "./public/icon.png",
+		"greeting": "Oh, hello.",
+		"fb": "wwwy3y3",
+		"profile": "i am wwwy3y3, born in taipei, a lovely place! I love web development and enjoy my life",
+		"contact": "-o__o-",
+		"pets": {
+			"cam":{
+				"gender": "girl",
+				"forgo": "cargo"
+			}
+		},
+		"projects": [
+			{
+				"anchor": "p106",
+				"bg-color": "#f1dbf0",
+				"nav-title": "Magic Gardens",
+				"title": "Magic Gardens Poster Show at One Grand Gallery",
+				"subtitle": "Illustration—Design",
+				"images": ["./public/mg-2.png"]
+			},
+
+			{
+				"anchor": "p104",
+				"bg-color": "#ffab59",
+				"nav-title": "Happy Halloween",
+				"title": "Halloween Decorations for Self Promotion",
+				"subtitle": "Illustration—Design",
+				"images": ["./public/halloween_1.png"]
+			}
+		]
+	},
+	"columns": {
+		"title": "html title",
+		"description": "html description",
+		"icon": "html icon",
+		"greeting": "頁面的第一行字",
+		"fb": {
+			"format": "user.socmed.fb.account",
+			"description": "臉書帳號"
+		},
+		"profile": {
+			"format": "user.profile.description",
+			"description": "自我介紹"
+		},
+		"contact": "如何聯絡",
+		"projects": {
+			"description": "我做過的projects",
+			"anchor": "anchor",
+			"bg-color": "背景色",
+			"nav-title": "title in nav",
+			"title": "big title",
+			"subtitle": "sub title",
+			"images": "照片"
+		},
+		"pets": {
+			"description": "我養的寵物",
+			"cam":{
+				"gender": {
+					"format": "user.profile.description",
+					"description": "自我介紹"
+				},
+				"forgo": {
+					"format": "user.profile.description",
+					"description": "自我介紹"
+				}
+			}
+		}
+	}	
+}

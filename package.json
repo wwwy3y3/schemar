@@ -1,6 +1,6 @@
 {
   "name": "schemar",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "schemar generate a schema from a js object",
   "main": "index.js",
   "scripts": {
@@ -27,5 +27,8 @@
     "lodash": "^2.4.1",
     "moment": "^2.9.0",
     "validator": "^3.40.1"
+  },
+  "devDependencies": {
+    "q-io": "^1.13.1"
   }
 }

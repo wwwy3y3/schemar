@@ -2,7 +2,9 @@ var schemar= require('../');
 var Datas= require('./datas');
 var Layouts= require('./layouts');
 var jsome= require('jsome');
-var _= require('lodash')
+var _= require('lodash');
+var FS= require('q-io/fs');
+var path= require('path')
 /*
 jsome(schemar.parse(Datas.varies, { textThres: 20 }));
 jsome(schemar.parse(Datas.nested, { textThres: 20 }));
@@ -21,7 +23,7 @@ FS.read(path.resolve(__dirname, 'withcols.json'))
 .then(function (json) {
 		var obj= schemar.parseObj(json.data, { textThres: 20 });
 		//jsome(obj);
-	    mergeInto(obj, json.columns);
+	    schemar.mergeInto(obj, json.columns);
 	    return obj;
 	})
 
