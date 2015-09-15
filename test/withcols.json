@@ -19,6 +19,7 @@
             "profiles": [{
                 "network": "Twitter",
                 "username": "john",
+                "description": "social media, twitter",
                 "url": "http://twitter.com/john"
             }]
         },
@@ -97,31 +98,32 @@
     "columns": {
         "basics": {
             "name": {
-                "format": "user.profile.name",
-                "description": "你的名字"
+                "~format": "user.profile.name",
+                "~description": "你的名字"
             },
             "label": "你的職稱",
             "picture": {
-                "format": "user.profile.thumbnail",
-                "description": "你的大頭照"
+                "~format": "user.profile.thumbnail",
+                "~description": "你的大頭照"
             },
             "email": {
-                "format": "user.profile.email",
-                "description": "你的信箱"
+                "~format": "user.profile.email",
+                "~description": "你的信箱"
             },
             "phone": {
-                "format": "user.profile.phone",
-                "description": "你的電話"
+                "~format": "user.profile.phone",
+                "~description": "你的電話"
             },
             "website": {
-                "format": "link",
-                "description": "你的網站"
+                "~format": "link",
+                "~description": "你的網站"
             },
             "summary": {
-                "format": "textarea",
-                "description": "說說你自己"
+                "~format": "textarea",
+                "~description": "說說你自己"
             },
             "location": {
+                "~description": "location啊啊啊！",
                 "address": "你的地址",
                 "postalCode": "郵遞區號",
                 "city": {
@@ -132,6 +134,8 @@
                 "region": "你住在哪一洲"
             },
             "profiles": {
+                "~description": "profile 啊啊啊",
+                "description": "description欄位",
                 "network": "輸入一個社群網站名稱；如：twitter, facebook...",
                 "username": "你在這個社群網站的名稱為何",
                 "url": "這個社群網站的連結為何"
@@ -141,20 +145,20 @@
             "company": "你曾經在哪間公司工作",
             "position": "你在此公司的職位為何",
             "website": {
-                "format": "link",
-                "description": "該公司的網站連結為何"
+                "~format": "link",
+                "~description": "該公司的網站連結為何"
             },
             "startDate": {
-                "format": "date",
-                "description": "你從什麼時候開始在這間公司工作"
+                "~format": "date",
+                "~description": "你從什麼時候開始在這間公司工作"
             },
             "endDate": {
-                "format": "endDate",
-                "description": "你在什麼時候結束在該公司工作"
+                "~format": "endDate",
+                "~description": "你在什麼時候結束在該公司工作"
             },
             "summary": {
-                "format": "textarea",
-                "description": "說明你的工作內容"
+                "~format": "textarea",
+                "~description": "說明你的工作內容"
             },
             "highlights": "你在該公司期間有什麼亮點？"
         },
@@ -162,20 +166,20 @@
             "organization": "你在哪裡當過志工",
             "position": "職稱為何",
             "website": {
-                "format": "link",
-                "description": "這個組織的網站連結為何"
+                "~format": "link",
+                "~description": "這個組織的網站連結為何"
             },
             "startDate": {
-                "format": "date",
-                "description": "你從什麼時候開始在此單位服務"
+                "~format": "date",
+                "~description": "你從什麼時候開始在此單位服務"
             },
             "endDate": {
-                "format": "endDate",
-                "description": "你在什麼時候結束在此單位服務"
+                "~format": "endDate",
+                "~description": "你在什麼時候結束在此單位服務"
             },
             "summary": {
-                "format": "textarea",
-                "description": "說明你的服務內容"
+                "~format": "textarea",
+                "~description": "說明你的服務內容"
             },
             "highlights": "你在服務期間有什麼亮點？"
         },
@@ -184,52 +188,52 @@
             "area": "專供領域為何",
             "studyType": "所拿的學位為何",
             "startDate": {
-                "format": "date",
-                "description": "你從什麼時候開始在此學校上課"
+                "~format": "date",
+                "~description": "你從什麼時候開始在此學校上課"
             },
             "endDate": {
-                "format": "endDate",
-                "description": "你在什麼時候結束在此學校上課"
+                "~format": "endDate",
+                "~description": "你在什麼時候結束在此學校上課"
             },
             "gpa": {
-                "format": "number",
-                "description": "你的GPA成績為何"
+                "~format": "number",
+                "~description": "你的GPA成績為何"
             },
             "courses": "你有修過哪些課"
         },
         "awards": {
             "title": "你得過什麼獎",
             "date": {
-                "format": "date",
-                "description": "什麼時候得獎的"
+                "~format": "date",
+                "~description": "什麼時候得獎的"
             },
             "awarder": "受獎人是誰",
             "summary": {
-                "format": "textarea",
-                "description": "描述一下這個獎項"
+                "~format": "textarea",
+                "~description": "描述一下這個獎項"
             }
         },
         "publications": {
             "name": "你曾經出版過的書籍名稱",
             "publisher": "作者是誰",
             "releaseDate": {
-                "format": "date",
-                "description": "出版日是什麼時候"
+                "~format": "date",
+                "~description": "出版日是什麼時候"
             },
             "website": {
-                "format": "link",
-                "description": "這個出版書籍網站為何"
+                "~format": "link",
+                "~description": "這個出版書籍網站為何"
             },
             "summary": {
-                "format": "textarea",
-                "description": "介紹一下這本書籍"
+                "~format": "textarea",
+                "~description": "介紹一下這本書籍"
             }
         },
         "skills": {
             "name": "你所會的技能名稱",
             "level": {
-                "description": "專精的程度為何",
-                "format": "level"
+                "~description": "專精的程度為何",
+                "~format": "level"
             },
             "keywords": "該技能的關鍵字"
         },
@@ -244,12 +248,12 @@
         "references": {
             "name": "參考資料的名稱",
             "reference": {
-                "format": "link",
-                "description": "參考資料連結為何"
+                "~format": "link",
+                "~description": "參考資料連結為何"
             },
             "website": {
-                "format": "link",
-                "description": "參考資料的網站"
+                "~format": "link",
+                "~description": "參考資料的網站"
             }
         }
 

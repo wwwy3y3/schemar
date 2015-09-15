@@ -309,23 +309,33 @@ var mergeInto= exports.mergeInto= function(schema, cols) {
 
         // only description
         if(_.isString(settings)){
-            settings= {'description': settings};
+            settings= {'~description': settings};
         }
 
         
         if(item.type=='array'){
             if(item.items.type=='array' || item.items.type=='object'){
                 for(key in settings)
-                    if(key=='description')
-                        item[key]= settings[key];
-                    else if(key=='format')
-                        item[key]= '$'+settings[key];
+                    if(key=='~description')
+                        item['description']= settings['~description'];
+                    else if(key=='~format')
+                        item['format']= '$'+settings['~format'];
                 mergeInto(item.items, settings);
             }else{
                 for(key in settings)
-                    item[key]= settings[key];
+                	if(key=='~description')
+                        item['description']= settings['~description'];
+                    else if(key=='~format')
+                        item['format']= '$'+settings['~format'];
+                    else
+                    	item[key]= settings[key];
             }
         }else if(item.type=='object'){
+        	for(key in settings)
+            	if(key=='~description')
+             	   item['description']= settings['~description'];
+            	else if(key=='~format')
+            	    item['format']= '$'+settings['~format'];
         	mergeInto(item, settings);
         }else{
             // an object with description, format
@@ -336,10 +346,10 @@ var mergeInto= exports.mergeInto= function(schema, cols) {
                 // it's either a format, description object
                 // or a nested array/object description
                 if(_.isString(setting)){
-                    if(key=='description')
-                        item[key]= setting;
-                    else if(key=='format')
-                        item[key]= '$'+setting;
+                    if(key=='~description')
+                        item['description']= setting;
+                    else if(key=='~format')
+                        item['format']= '$'+setting;
                 }
 
                     
