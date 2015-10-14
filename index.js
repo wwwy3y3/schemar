@@ -305,7 +305,16 @@ var mergeInto= exports.mergeInto= function(schema, cols) {
         var item= schema.items[key];
 
         // if key in columns not defined in schema
-        if(!item) continue;
+        // create an item based on settings
+        if(!item && key.indexOf('~')!==0){
+        	// key not found in data
+        	// perhaps developer too lazy
+        	// add one
+        	// pretend it's a string field
+        	item= schema.items[key]= { type: 'string' };
+        }else if(!item){
+        	continue;
+        }
 
         // only description
         if(_.isString(settings)){
@@ -320,6 +329,20 @@ var mergeInto= exports.mergeInto= function(schema, cols) {
                         item['description']= settings['~description'];
                     else if(key=='~format')
                         item['format']= '$'+settings['~format'];
+                mergeInto(item.items, settings);
+            }else if(item.items.type=='undefined'){
+            	// undefined items type
+            	// probably get a empty data
+            	// so we can't parse any type info from data
+            	item.items.type= 'object';
+            	item.items.items= {};
+            	for(key in settings)
+                    if(key=='~description')
+                        item['description']= settings['~description'];
+                    else if(key=='~format')
+                        item['format']= '$'+settings['~format'];
+                    else
+                    	item.items.items[key]= {};
                 mergeInto(item.items, settings);
             }else{
                 for(key in settings)
