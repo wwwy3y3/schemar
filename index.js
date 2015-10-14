@@ -138,8 +138,6 @@ function chkTypeFormat (val, opts) {
 
 function formater (val, opts) {
 	var types= {
-		color: validator.isHexColor,
-		date: validator.isDate,
 		email: validator.isEmail,
 		textarea: function (str) {
 			return (opts && opts.textThres && str.length>= opts.textThres)
@@ -239,8 +237,6 @@ function schemaParse (val, layout, opts) {
 function stringFormat (str, layout, opts) {
 	var obj= { type: 'string' };
 	var types= {
-		color: validator.isHexColor,
-		date: validator.isDate,
 		email: validator.isEmail,
 		integer: validator.isInt,
 		float: validator.isFloat,
@@ -328,7 +324,7 @@ var mergeInto= exports.mergeInto= function(schema, cols) {
                     if(key=='~description')
                         item['description']= settings['~description'];
                     else if(key=='~format')
-                        item['format']= '$'+settings['~format'];
+                        item.items['format']= '$'+settings['~format'];
                 mergeInto(item.items, settings);
             }else if(item.items.type=='undefined'){
             	// undefined items type
@@ -340,7 +336,7 @@ var mergeInto= exports.mergeInto= function(schema, cols) {
                     if(key=='~description')
                         item['description']= settings['~description'];
                     else if(key=='~format')
-                        item['format']= '$'+settings['~format'];
+                        item.items['format']= '$'+settings['~format'];
                     else
                     	item.items.items[key]= {};
                 mergeInto(item.items, settings);
@@ -349,7 +345,7 @@ var mergeInto= exports.mergeInto= function(schema, cols) {
                 	if(key=='~description')
                         item['description']= settings['~description'];
                     else if(key=='~format')
-                        item['format']= '$'+settings['~format'];
+                        item.items['format']= '$'+settings['~format'];
                     else
                     	item[key]= settings[key];
             }
