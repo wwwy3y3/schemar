@@ -324,7 +324,7 @@ var mergeInto= exports.mergeInto= function(schema, cols) {
                     if(key=='~description')
                         item['description']= settings['~description'];
                     else if(key=='~format')
-                        item.items['format']= '$'+settings['~format'];
+                        item.items['format']= settings['~format'];
                 mergeInto(item.items, settings);
             }else if(item.items.type=='undefined'){
             	// undefined items type
@@ -336,7 +336,7 @@ var mergeInto= exports.mergeInto= function(schema, cols) {
                     if(key=='~description')
                         item['description']= settings['~description'];
                     else if(key=='~format')
-                        item.items['format']= '$'+settings['~format'];
+                        item.items['format']= settings['~format'];
                     else
                     	item.items.items[key]= {};
                 mergeInto(item.items, settings);
@@ -345,7 +345,7 @@ var mergeInto= exports.mergeInto= function(schema, cols) {
                 	if(key=='~description')
                         item['description']= settings['~description'];
                     else if(key=='~format')
-                        item.items['format']= '$'+settings['~format'];
+                        item.items['format']= settings['~format'];
                     else
                     	item[key]= settings[key];
             }
@@ -354,7 +354,7 @@ var mergeInto= exports.mergeInto= function(schema, cols) {
             	if(key=='~description')
              	   item['description']= settings['~description'];
             	else if(key=='~format')
-            	    item['format']= '$'+settings['~format'];
+            	    item['format']= settings['~format'];
         	mergeInto(item, settings);
         }else{
             // an object with description, format
@@ -368,7 +368,7 @@ var mergeInto= exports.mergeInto= function(schema, cols) {
                     if(key=='~description')
                         item['description']= setting;
                     else if(key=='~format')
-                        item['format']= '$'+setting;
+                        item['format']= setting;
                 }
 
                     
